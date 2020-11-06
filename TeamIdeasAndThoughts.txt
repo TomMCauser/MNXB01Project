@@ -72,7 +72,13 @@ and graph. - 02/11/2020
 - Want to use class TTimeStamp to plot data from 1995 and earlier 
 - Have plotter ignore column names, manually removing column names currently
 - Next begin analysis of the data histogram, standard dev, min max, etc
-
+- Able to plot data from 1995 - 2020 using TDatime Class
+- Want to use class TTimeStamp to plot data from 1995 and earlier
+- Have plotter ignore column names, manually removing column names currently
+- Next begin analysis of the data histogram, standard dev, min max, etc
+- Created code that crates function that calls town
+- Created TempCompHist.C that allows two years weather data to be plotted as hist gives them a fit and compares to the two years. Allows comparison between different years to see how global warming has affected different places in Sweden.
+- Did some stuff on the report.
 (Gustaf)
 
 

@@ -14,7 +14,7 @@ using namespace std;
 
 void TempCompHist(Int_t year1, Int_t year2, Int_t hour, const char* place){
 
-string fileName = Form("../HistData/Data%s.csv", place);
+string fileName = Form("../CleansedData/Data%s.csv", place);
 
 ifstream tempo(fileName);
 tempo.close();
