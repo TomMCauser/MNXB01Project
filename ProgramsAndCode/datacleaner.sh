@@ -24,9 +24,7 @@ STARTLINE=$(grep -n "Datum" ${DATAFILE} | cut -f1 -d:)
 
 STARTLINE=$(( $STARTLINE + 1 ))
 
-echo "Adding headers to the file"
 
-echo "Date Time Temperature" > rawdatafinal_${DATAFILE}
 
 if [[ $STARTLINE == 1 ]]; then
 	
@@ -40,7 +38,7 @@ if [[ $STARTLINE == 1 ]]; then
 	sed -i 's/  */ 00:00:00 /' rawdata_${DATAFILE}
 	
 	echo "Selecting only relevant columns and copying to new file rawdatafinal_${DATAFILE}"
-	cut -d " " -f 1-3 rawdata_${DATAFILE} >> rawdatafinal_${DATAFILE}
+	cut -d " " -f 1-3 rawdata_${DATAFILE} > rawdatafinal_${DATAFILE}
 
 else
 	
@@ -54,7 +52,7 @@ else
 	rm rawdata_${DATAFILE}
 
 	echo "Substituting the ; with spaces, result in a final rawdatafinal_${DATAFILE}"
-	sed 's/;/ /g' rawdatanext_${DATAFILE} >> rawdatafinal_${DATAFILE}
+	sed 's/;/ /g' rawdatanext_${DATAFILE} > rawdatafinal_${DATAFILE}
 	rm rawdatanext_${DATAFILE}
 
 fi

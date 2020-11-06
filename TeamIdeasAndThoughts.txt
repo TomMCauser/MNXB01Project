@@ -3,6 +3,15 @@ and suggestions about what they want to do. Ideas may come up randomly
 and not in the meeting, which is why this file exists.
 
 (Sam)
+-Got the weather analysis to compare two graphs but then realized it would be better analysis
+to compare one year with an average, I wrote a code to do this. Uploaded original two
+year comparison and new event analysis. The datacleaner was changed to remove headers.
+-06/11/2020
+
+-Currently attempting to change the Weather analysis code that that it can compare two
+years on the same graph, this is to aid in my analysis to see if there is any noticable
+change in the temperature after the Eyjafjallajökull volcanic eruption in 2010. - 05/11/2020
+
 - I have further edited the cleaner so to comply with tim's request. The cleaner now
 prompts the user to ask if they would like the date and time in a separate file to the
 temperatures and splits them accordingly. - 04/11/2020
@@ -24,7 +33,27 @@ of these pose problems so I will leave them in this form for now and correct if
 needed. - 02/11/2020
 
 (Tom)
-- Yesterday I worked on the graphing code. The intention is to give the user the ability to
+
+-> I have made new code which utilises TTree. Unfortunately our group has fractured
+somewhat into four different codes, however this was a predictable outcome when
+the initial code failed. In a "more time" situation, we would have worked on condensing
+all of our codes into something more general, which is something that Sam and
+Gustaf discussed yesterday. - 06/11/2020
+
+-> The code that I've worked on is essentially (and unfortunately) useless because
+it is built around the TGraph function, which isn't what we want to use. It would be
+salvagable except there doesn't seem to be a direct way to plot columns from a file easily
+using TGraph functionality. For this reason, two of my colleagues (Gustaf and Tim) are
+experimenting with plotting the data using vectors and other methods. Hopefully they have
+more success than I did. Due to new course commitments, I'm unable to work much on the code
+today, however I'm hoping to contribute tomorrow morning in the report for the code.
+
+Our aim is to come up with three points of analysis, and write them neatly into a report.
+I will write this report tomorrow morning, before our presentation. I will
+create the outline of this report in our meeting later today, and upload the first
+commit of it if I can find a way to wget it into the linux filespace. - 05/11/2020
+
+-> Yesterday I worked on the graphing code. The intention is to give the user the ability to
 choose what they're plotting against what. I've had a few negative thoughts about this though
 namely that it might be irritating for analysis. But will hold a meeting today and discuss
 with group what they think. It has only been tried on "play data" so far, so I'm slightly
@@ -32,7 +61,7 @@ concerned about using it on "real" data -- we'll see what happens. I also acknow
 that it was probably a bad idea for me to not make a commit yesterday with the "so far"
 working code. I will definitely put the code on Github today. - 04/11/2020
 
-- It would be good for the graphing file to have two different functions.
+-> It would be good for the graphing file to have two different functions.
 Assume that the graphing file is called Grapher(). It would be good if Grapher
 upon being executed, would ask the user which columns they want to compare
 and graph. - 02/11/2020

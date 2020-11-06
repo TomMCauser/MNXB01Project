@@ -9,6 +9,13 @@
 #include <TGraph.h>
 #include <vector>
 
+// I am unfortunately retiring this code because it isn't suitable for what
+// I wanted to use it for. The idea was to create a "central program", however
+// this failed in light of the fact that TH1 does not accept files as direct inputs.
+// I should have checked this beforehand, however lesson learned!
+//
+// - Tom
+
 using namespace std;
 
 string ColumnCreator(int desiredColumnA, int desiredColumnB, int numberOfColumns)
