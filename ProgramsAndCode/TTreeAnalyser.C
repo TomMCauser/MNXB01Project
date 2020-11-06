@@ -14,10 +14,16 @@
 
 using namespace std;
 
-void DataFile()
+void PlotTempForFile()
 	{
+		string FileName;
 		fstream file;
-		file.open("CleansedLundData.csv", ios::in);
+		cout << "Enter file name (if not in the same location, write path and filename)." << endl;
+		cout << "As an example, \"../CleansedData/CleansedLundData.csv\" (not including speech marks) will plot the Lund data." << endl;
+		cout << "Desired file name: ";
+		cin >> FileName;
+			
+		file.open( FileName.c_str() , ios::in);
 		int YYYY, MM, DD, hh, mm, ss;
 		double Temp;
 		char t, f;
@@ -41,10 +47,8 @@ void DataFile()
 				//cout << YYYY << t << MM << t << DD << " " << hh << ":" << mm << ":" << ss << " " << Temp << endl;
 				tree->Fill();		
 			}
-			
-		//tree->Draw("Temp"); do this for each location and do analysis
 		
-		tree->Draw("Temp:YYYY", "MM == 7");
+		tree->Draw("Temp");
 			
 		output->Write();
 		output->Close();		
