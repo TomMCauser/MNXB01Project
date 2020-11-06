@@ -31,7 +31,6 @@ void yearcompare() {
 		cout << "File could not be opened. Here are three reasons why this might have happened. " << endl;
 		cout << "(1) You've entered the wrong file name. " << endl;
 		cout << "(2) This code is not in the same folder/directory as the file you're trying to open. " << endl;
-		cout << "(3) Tom is bad at programming and the code is wrong, not you. " << endl;
 		cout << "Try again" << endl;
 		return;
 	}
@@ -161,6 +160,9 @@ void yearcompare() {
 	myGraph->SetMarkerStyle(20);
 	myGraph2->SetMarkerStyle(20);
 	myGraph2->SetLineColor(2);
+	myGraph->SetTitle("Year comparision ");
+	myGraph->GetYaxis()->SetTitle("Air Temperature /Degrees C");
+	myGraph->GetXaxis()->SetTitle("Date");
 	myGraph->Draw("AC");
 	myGraph2->Draw("C");
 	
@@ -170,6 +172,8 @@ void yearcompare() {
 	myGraph->GetXaxis()->SetTimeFormat("%Y-%m-%d");
 	
 	myGraph->GetXaxis()->SetTimeOffset(0,"gmt");
+	
+	cout << "The year " << markyear << " is the black line, and year " << markyear2 << " is the red line" << endl;
 
 
 }
