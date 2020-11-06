@@ -31,7 +31,6 @@ void eventanalysis() {
 		cout << "File could not be opened. Here are three reasons why this might have happened. " << endl;
 		cout << "(1) You've entered the wrong file name. " << endl;
 		cout << "(2) This code is not in the same folder/directory as the file you're trying to open. " << endl;
-		cout << "(3) Tom is bad at programming and the code is wrong, not you. " << endl;
 		cout << "Try again" << endl;
 		return;
 	}
@@ -59,6 +58,7 @@ void eventanalysis() {
 	}
 	Int_t i = 0;
 		
+	// this is all the input data we ask the user for
 	int size = dates.size();
 	cout << "please enter year of event for analysis" << endl ;
 	string markyear;
@@ -70,18 +70,31 @@ void eventanalysis() {
 	string markday;
 	cin >> markday;
 
-	cout  << "please enter year for beginning of average" << endl;
+	cout  << "please enter a start year for the span" << endl;
 	string markyear2;
 	cin >> markyear2;
 	int my2 = stoi(markyear2);
-	cout <<"please enter year for end of average" <<endl;
+	cout <<"please enter an end year for the span" <<endl;
 	string markyear3;
 	cin >> markyear3;
 	int my3 = stoi(markyear3)	;
+	
+	//to prevent some breaks if the user enters a start year after the end year we switch variables
+	
+	if (my3 - my2 < 0)
+	{
+			cout << "Start year is after the end year, correcting" << endl;
+			string markplace = markyear3;
+			markyear3 = markyear2;
+			markyear2 = markplace;
+			int myplace = my3;
+			my3 = my2;
+			my2 = myplace;
+	}
+		
+	// this is the span we will use or rather the numver of years we want
 	int over = my3 - my2+1;
-	
-	
-	
+	// here we set up all the vectors we want to use
 	vector<string> years;
 	vector<string> years2;
 	vector<string> months;
@@ -98,6 +111,8 @@ void eventanalysis() {
 	vector<float> temps;
 	vector<vector<float>> tempav;
 	
+	//This first double for loop we create all the temperature vectors for the different years
+	
 	for(Int_t k = 0; k<over;k++)
 		{	
 			int ne = my2 + k;
@@ -107,7 +122,6 @@ void eventanalysis() {
 			for(Int_t i=0; i<size; i++)
 			{
 			string datetmp = dates.at(i);
-			//cout << datetmp.substr(0,4);
 			if (datetmp.substr(0,4) == na)
 				{
 				temps.push_back( temp.at(i));
@@ -116,14 +130,16 @@ void eventanalysis() {
 			}
 			tempav.push_back(temps);
 		}	
+	
+	//This for loop deals with only geting data from the event year
 	for(Int_t i=0; i<size; i++)
 	{
 		string datetmp = dates.at(i);
-		//cout << datetmp.substr(0,4);
+		
 
 		if (datetmp.substr(0,4) == markyear)
 		{
-		//cout << "YES";
+		
 		years.push_back( datetmp.substr(0,4) );
 		months.push_back( datetmp.substr(5,2) );
 		days.push_back( datetmp.substr(8,2) );
@@ -142,7 +158,7 @@ void eventanalysis() {
 		}
 	}
 	vector<float> tempfin;
-	
+	//this for loop is what creates the vector of average temperatures
 	float over1 = over;
 	for (Int_t y=0;y<minsize;y++)
 		{
@@ -157,19 +173,7 @@ void eventanalysis() {
 		tempfin.push_back(aver);
 		}
 	
-	/*
-	if(tempfin.empty())
-	{
-		cout << "oh bother" << endl;
-		}
-	else{
-	int len = tempfin.size();
-	for (int r=0; r<len;r++)
-	{
-	cout << tempfin[r] << " " << endl;	
-	}
-	}
-    */
+
 	
 	//Setting up times
 	
@@ -185,9 +189,10 @@ void eventanalysis() {
 	data.push_back(ss);
 	
 	
-	//cout << data[0][0] <<'-'<< data[1][0] << '-' << data[2][0] << ' ' << data[3][0]<<':'<< data[4][0] <<':'<< data[5][0] <<endl;
+	
 	
 	//Now we make TDatime objects::
+	//This first part creates the x and y vectors for the event year
 	
 	float x[span];
 	float y[span];
@@ -198,7 +203,7 @@ void eventanalysis() {
 		x[i] = da_tmp.Convert();
 		y[i] = temp2.at(i);
 	}
-	
+	//This second part creats the x and y vectors for the average temperatures
 	float x2[minsize];
 	float y2[minsize];
 	for(Int_t i = 0; i < minsize; i++)
@@ -208,7 +213,7 @@ void eventanalysis() {
 		y2[i] = tempfin.at(i);
 	}
 	
-	
+	//This last part creates the marker line at the event date
 	float x3[2];
 	float y3[2];
 	
@@ -220,7 +225,7 @@ void eventanalysis() {
 	y3[0]= 30;
 	y3[1]= -10;
 	
-	
+	//Graph stuff
 	
 	TGraph* myGraph = new TGraph(span,x,y);
 	TGraph* myGraph2 = new TGraph(span,x2,y2) ;
@@ -229,19 +234,21 @@ void eventanalysis() {
 	myGraph2->SetMarkerStyle(20);
 	myGraph2->SetLineColor(2);
 	myGraph3->SetLineColor(4);
+	myGraph->SetTitle("Year to Average Comparison");
+	myGraph->GetYaxis()->SetTitle("Air Temperature /Degrees C");
+	myGraph->GetXaxis()->SetTitle("Date");
 	myGraph->Draw("AC");
 	myGraph2->Draw("C");
 	myGraph3->Draw("C");
 	
 	
 	myGraph->GetXaxis()->SetTimeDisplay(1);
-	//myGraph->GetXaxis()->SetNdivisions(size);
+
 	myGraph->GetXaxis()->SetTimeFormat("%Y-%m-%d");
 	
 	myGraph->GetXaxis()->SetTimeOffset(0,"gmt");
-
+	cout << "The daily temperatures in year " << markyear << " are the black line, and the average daily temperatures between " << markyear2 << " and " << markyear3 << " are the red line and the blue line marks the date " << markyear << "-" << markmonth << "-" << markday << endl ;
 
 }
-//rawdatafinal_smhi-opendata_Lund.csv
 
 

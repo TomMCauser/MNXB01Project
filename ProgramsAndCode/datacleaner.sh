@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 SMHIINPUT=$1
 
 if [[ $# -lt 1 ]]; then
@@ -8,6 +9,7 @@ if [[ $# -lt 1 ]]; then
 fi
 
 DATAFILE=$(basename $SMHIINPUT)
+cp -a $SMHIINPUT ${DATAFILE}
 
 [[ -e ${DATAFILE} ]]
 status=$?
@@ -32,6 +34,7 @@ if [[ $STARTLINE == 1 ]]; then
 	
 	echo "Turning time format into standard, resulting in rawdata_${DATAFILE}"
 	sed  's/  */-/' ${DATAFILE} > rawdata_${DATAFILE}
+	rm ${DATAFILE}
 	sed -i 's/  */-/' rawdata_${DATAFILE}
 	
 	echo "As time of day is not given we assume it to be 00:00:00 for convenience and to fit with existing data"
@@ -39,13 +42,14 @@ if [[ $STARTLINE == 1 ]]; then
 	
 	echo "Selecting only relevant columns and copying to new file rawdatafinal_${DATAFILE}"
 	cut -d " " -f 1-3 rawdata_${DATAFILE} > rawdatafinal_${DATAFILE}
+	rm rawdata_${DATAFILE}
 
 else
 	
 	
 	echo "Datum found, removing the first $STARTLINE lines and copying to new file rawdata_${DATAFILE} "
 	tail -n +$STARTLINE ${DATAFILE} > rawdata_${DATAFILE}
-
+	rm ${DATAFILE}
 	echo "Selecting only relevant columns and copying to new file"
 	cut -d ";" -f 1-3 rawdata_${DATAFILE} > rawdatanext_${DATAFILE}
 	echo "Deleteing rawdata_${DATAFILE}"
@@ -62,7 +66,10 @@ if [[ $ANS == "y" ]]; then
 	cut -d " " -f 3 rawdatafinal_${DATAFILE} > rawdatafinaltemp_${DATAFILE}
 	rm rawdatafinal_${DATAFILE} 
 	exit 0;
+fi
+if [[ $ANS == "n" ]]; then
+	exit 0;
 else
+	echo "Invalid answer for (y/n). The file was not split."
 	exit 0;
 fi
-
