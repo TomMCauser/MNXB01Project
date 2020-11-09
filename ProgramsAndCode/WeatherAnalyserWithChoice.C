@@ -100,23 +100,47 @@ void AnalyseWeather() {
 	
 	vector<float> x;
 	vector<float> y;
-	
+	string tmp;
 	Bool_t choice;
 	string monthChoice;
 	string dayChoice;
-	cout << " Normal timeline or date histogram (0/1)" << endl;
-	cin >> choice;
-//	if(choice == 1)
-//	{
-	cout << "Chose a month " << endl;
-	cin >> monthChoice;
-	cout << "Chose a day " << endl;
-	cin >> dayChoice;
-	TH1D* hist = new TH1D("hist", "Temperature for given date; Temperature; Entries", 
-								60, -35, 35);
-//	}
+	cout << " Type 0 to see the a timeline with all recorded temperatures from 1995 \n Type 1 to get a histogram for a given date" << endl;
+	cin >> tmp;
+	if(tmp !="0" && tmp != "1")
+	{
+		cout <<"Error, you did not choose one of the appropriate choices" << endl;
+		return;
+	}
+	else
+	{
+		choice = stoi(tmp);
+	}
+	
+	if(choice == 1)
+	{
+		cout << "pick a month" << endl;
+		cin >> monthChoice;
+		cout << "pick a day" << endl;
+		cin >> dayChoice;
+		if(stoi(monthChoice) < 1 || stoi(monthChoice) >12)
+		{
+			cout << "Error, invalid month" << endl;
+			return;
+		}
+		else if(stoi(dayChoice) < 1 || stoi(dayChoice) >31)
+		{
+			cout << "Error, invalid day" << endl;
+			return;
+		}
+		//There can still be errors if you pick 31 on a day that doesnt have 31st or picking a late day in february
+	}
+	
+	TH1D* hist = new TH1D("hist", "Temperature histogram for given date; Temperature C; Entries", 
+							75, -35, 40);
+
 	
 	Int_t axissize = 0;
+	Int_t old = 0;
 	for(Int_t i = 0; i<size; i++)
 	{
 		
@@ -139,13 +163,13 @@ void AnalyseWeather() {
 		}
 		else if(choice == 1)
 		{
-			if(M==stoi(monthChoice) && D == stoi(dayChoice))
+			if(M==stoi(monthChoice) && D == stoi(dayChoice) && old != Y) //the last check is so that we don't take several temperatures from the same day into the histogram, instead we only take the first recording from each day
 			{					
 				hist->Fill(temp.at(i));
+				old = Y;
 			}
 		}
-	}
-//			if(M==stoi(monthChoice) && D == stoi(dayChoice))	
+	}	
 	if(choice == 0)
 	{
 		float xaxis[axissize];
@@ -168,19 +192,24 @@ void AnalyseWeather() {
 	}
 	else if(choice == 1)
 	{
+		hist->SetFillColor(kRed + 1);
 		TCanvas* c1 = new TCanvas("c1", "temp on day", 900, 600);
 		hist->GetXaxis()->CenterTitle(true);
 		hist->GetYaxis()->CenterTitle(true);
+		double mean = hist->GetMean(); //The mean of the distribution
+		double stdev = hist->GetRMS(); //The standard deviation
 		hist->Draw();
-		
-	}
 
-	
-	
-	
-	
+	}
 
 
 }
-// nfs/users/ppguests/gu2641lo-s/tutorials/project/CleansedData/CleansedLundData2.csv
+/*
+ * 
+CleansedKarlstadData2.csv
+CleansedLundData2.csv
+CleansedSoderarm2.csv
+* 
+* */
+
 
