@@ -130,6 +130,34 @@ and which represents the date of the event one wants to visually analyse.
 
 Gustaf's Code
 
+# Instuctions to run WeatherAnalyserWithChoice.C
+
+(1) Navigate to the folder "ProgramsAndCode"
+
+(2) Run Sam's ./datacleaner.sh to make sure the data is cleansed. Choose the option n when it asks if you want seperate files.
+
+(2.1) Suggested to use "./datacleaner.sh ../RawData/CleansedKarlstadData2.csv" and "./datacleaner.sh ../RawData/CleansedSoderarm2.csv"
+
+(3) Open root and run .L WeatherAnalyserWithChoice.C+
+
+(4) run AnalyseWeather()
+
+(5) when asked to give the name of the file you want to analyse, write: ../CleansedData/CleansedSoderarm.csv or similar depending on the city.
+
+(6) You will be asked: "Type 0 to see the a timeline with all recorded temperatures from 1995
+                        Type 1 to get a histogram for a given date"
+(7) If you type 0 you will get a timeline of all recorded temperatures from and including 1995, but a very clotted graph, however if you if it you will get a slightly postivive slope likely due to global warming, however the choice of 0 is mainly a residue of the original intent of this file.
+
+(8) If you choose 1 you will be asked to pick a month and date
+
+(9) pick a month and date, for example 1 and then 1, for the first of january
+
+(10) You will be asked if you want all the entries from the given date in the histogram (for this enter "y"), or if you want just the first entry on the given date and year (for this enter "n"), incorrect input should default to printing all entries.
+
+(11) A histogram of the temperatures of the given date will be displayed.
+
+//with more time we would likely try to merge all code with this file so that you could make all choices here.
+
 ------------------------------------------------------------------------
 
 Tim's Code
