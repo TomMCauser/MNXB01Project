@@ -152,7 +152,9 @@ Gustaf's Code
 
 (9) pick a month and date, for example 1 and then 1, for the first of january
 
-(10) A histogram with the first recording of the temperature on that day each year will be shown
+(10) You will be asked if you want all the entries from the given date in the histogram (for this enter "y"), or if you want just the first entry on the given date and year (for this enter "n"), incorrect input should default to printing all entries.
+
+(11) A histogram of the temperatures of the given date will be displayed.
 
 //with more time we would likely try to merge all code with this file so that you could make all choices here.
 
