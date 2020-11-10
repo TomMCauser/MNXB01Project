@@ -104,6 +104,7 @@ void AnalyseWeather() {
 	Bool_t choice;
 	string monthChoice;
 	string dayChoice;
+	string all = "y";
 	cout << " Type 0 to see the a timeline with all recorded temperatures from 1995 \n Type 1 to get a histogram for a given date" << endl;
 	cin >> tmp;
 	if(tmp !="0" && tmp != "1")
@@ -122,6 +123,8 @@ void AnalyseWeather() {
 		cin >> monthChoice;
 		cout << "pick a day" << endl;
 		cin >> dayChoice;
+		cout << "Print all entries on the day of a given year (y), or just the first entry of that year? (n)" << endl;
+		cin >> all;
 		if(stoi(monthChoice) < 1 || stoi(monthChoice) >12)
 		{
 			cout << "Error, invalid month" << endl;
@@ -163,7 +166,7 @@ void AnalyseWeather() {
 		}
 		else if(choice == 1)
 		{
-			if(M==stoi(monthChoice) && D == stoi(dayChoice) && old != Y) //the last check is so that we don't take several temperatures from the same day into the histogram, instead we only take the first recording from each day
+			if(M==stoi(monthChoice) && D == stoi(dayChoice) && (old != Y || all != "n" ) ) //the last check is so that we don't take several temperatures from the same day into the histogram, instead we only take the first recording from each day
 			{					
 				hist->Fill(temp.at(i));
 				old = Y;
